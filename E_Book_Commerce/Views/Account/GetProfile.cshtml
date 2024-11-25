@@ -1,0 +1,17 @@
+﻿@model Book_Commerce.Models.UserViewModel
+<div class="container mt-5">
+    <form asp-controller="Account" asp-action="GetProfile" method="get">
+        <h2 class="mb-4">Profil Bilgilerim</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Kullanıcı Adı: @Model.Username</h5>
+                <p class="card-text">
+                    <strong>Ad:</strong> @Model.Name <br />
+                    <strong>Soyad:</strong> @Model.Surname <br />
+                    <strong>Email:</strong> @Model.Email <br />
+                </p>
+                <a href="@Url.Action("Logout", "Account")" class="btn btn-danger">Çıkış Yap</a>
+            </div>
+        </div>
+    </form>
+</div>

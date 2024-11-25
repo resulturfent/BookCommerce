@@ -1,0 +1,228 @@
+﻿@model Book_Commerce.Models.UserViewModel
+<h1>KAYIT OL</h1>
+<form id="registerForm" asp-controller="Account" asp-action="Register" method="post">
+    <div class="form-group">
+        <label for="Name">Ad: </label>
+        <input id="nameId" type="type" class="form-control" name="Name" />
+        <span id="nameError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Surname">Soyad: </label>
+        <input type="type" class="form-control" name="Surname" />
+        <span style="color:red" asp-validation-for="Surname"></span>
+    </div>
+    <div class="form-group">
+        <label for="Email">Email </label>
+        <input type="type" class="form-control" name="Email" />
+        <span style="color:red">@ViewBag.MailHata</span>
+    </div>
+    <div class="form-group">
+        <label for="Username">Kullanıcı Adı: </label>
+        <input type="type" class="form-control" name="Username" />
+        <span style="color:red">@ViewBag.UsernameHata</span>
+        <span style="color:red">@ViewBag.SameUsernameHata</span>
+    </div>
+    <div class="form-group">
+        <label for="Password">Parola: </label>
+        <input type="password" class="form-control" name="Password" />
+        <span style="color:red">@ViewBag.PasswordHata</span>
+        <span style="color:red">@ViewBag.PasswordMoreThanHata</span>
+        <span style="color:red">@ViewBag.PasswordBigWordHata</span>
+        <span style="color:red">@ViewBag.PasswordCharacterHata</span>
+    </div>
+    <button type="submit" class="btn btn-primary" onclick="validateForm(event)">Kaydet</button>
+
+</form>
+<script>
+    function validateForm(event) {
+        event.preventDefault();
+        let nameInput = document.getElementById("nameId").value.trim();
+        let error = document.getElementById("nameError");
+        let form = document.getElementById("registerForm");
+        if (nameInput == "") {
+            nameError.innerText = "Ad Alanı boş bırakılamaz."
+        } else {
+            form.submit();
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

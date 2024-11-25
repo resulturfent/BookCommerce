@@ -1,0 +1,14 @@
+﻿@using Book_Commerce.Models
+@model CategoryViewModel
+
+<h2>Update Author</h2>
+
+<form asp-controller="Category" asp-action="UpdateCategory" method="post" enctype="multipart/form-data">
+    <input hidden name="categoryId" value="@Model.Id" />
+    <div class="form-group">
+        <label for="CategoryName">Category Name </label>
+        <input type="text" class="form-control" name="CategoryName" />
+    </div>
+    <button type="submit" class="btn btn-primary">Update Category</button>
+</form>
+

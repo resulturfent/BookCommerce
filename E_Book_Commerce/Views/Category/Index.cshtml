@@ -1,0 +1,53 @@
+﻿ @using DAL.Data
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+ @model List<Book_Commerce.Models.CategoryViewModel>
+ @inject AppDbContext _context
+
+
+<h1>Categories</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Category Name</th>
+
+            <th scope="col">Delete</th>
+            <th scope="col">Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.CategoryName</td>
+
+
+                <td>
+                    <form asp-controller="Category" asp-action="Delete" method="post">
+                        <input type="hidden" name="categoryId" value="@category.Id" />
+                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Category" asp-action="UpdateCategory" method="get">
+                        <input type="hidden" name="categoryId" value="@category.Id" />
+                        <button type="submit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to delete this category?')) {
+                this.submit();
+            }
+        });
+    });
+</script>

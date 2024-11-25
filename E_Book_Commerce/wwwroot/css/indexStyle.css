@@ -1,0 +1,199 @@
+﻿/* Görüntüyü ekranın soluna hizalamak için */
+.left-image {
+    position: absolute; /* Mutlak konumlandırma */
+    top: 100px; /* Üstten biraz boşluk bırakın */
+    left: 0; /* Ekranın soluna sabitleyin */
+    margin-left: 100px; /* Sol kenardan küçük bir boşluk ekleyin */
+    width: 100px; /* Genişlik ayarı, ihtiyaçlarınıza göre değiştirebilirsiniz */
+    height: auto; /* Yükseklik otomatik olarak en-boy oranına göre ayarlanır */
+}
+
+/*Menu bölümünün CSS başlangıç */
+#menu {
+    border: 0px solid white; /* Frame around the div */
+    background-color: blue; /* Blue background */
+    padding: 2px; /* Add some padding */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Sığmayan öğeleri alt satıra geçirir */
+    list-style: none; /* Madde işaretlerini kaldırır */
+    /* white-space: nowrap; /* Uzun öğelerin tek satırda kalmasını sağlar */
+}
+
+#navblue a {
+    color: white; /* White text */
+    text-decoration: none; /* Remove underline from links */
+    margin-right: 25px; /* Space between links */
+    padding: 0 15px;
+    border-right: 1px solid white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    display: block;
+}
+
+#navblue {
+    display: flex;
+    list-style-type: none; /* Remove bullet points from the list */
+    padding: 5;
+}
+
+    #navblue li {
+        display: inline; /* Display list items in a row */
+        margin: 5px; /* Öğeler arasındaki boşlukları daraltmak için */
+        padding: 0; /* Ekstra iç boşlukları kaldırmak için */
+    }
+/*Menu bölümünün CSS bitiş. */
+
+#container {
+    display: flex; /* Use flexbox to align the searchbar and cart */
+    justify-content: flex-end; /* Align both to the right */
+    align-items: center; /* Vertically align items */
+    margin-right: 20px; /* Optional: add some space from the right edge */
+    margin-top: 90px;
+}
+
+
+#searchbar {
+    margin-right: 200px; /* Space between the searchbar and the cart */
+}
+
+.search-box {
+    flex: 1;
+    padding: 10px;
+    width: 400px;
+    height: 20px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    padding: 10px 10px 10px 40px; /* İçeride simgeye yer açmak için soldan padding */
+    background-image: url('https://cdn-icons-png.flaticon.com/512/622/622669.png'); /* Arama simgesi */
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 10px center; /* Simgenin pozisyonu */
+}
+
+.search-button {
+    padding: 13px 30px;
+    background-color: #0044cc;
+    color: white;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
+.favorite-list {
+    font-size: 15px;
+    background-color: lightgray; /* Background color for the cart */
+    padding: 10px;
+    border-radius: 0px;
+    margin-right: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+#cart {
+    background-color: lightgray; /* Background color for the cart */
+    padding: 10px;
+    border-radius: 0px;
+    margin-right: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+    #cart a {
+        color: black; /* Text color for the cart link */
+        text-decoration: none; /* Remove underline */
+    }
+
+/*Login butonu ile ilgili*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+/*Login butonu ile ilgili*/
+.navbar {
+    display: flex;
+    justify-content: flex-end; /* Elemanları sağa hizala */
+    align-items: center;
+    padding: 8px 40px;
+    border-bottom: 1px solid #ccc;
+}
+/*Login butonu ile ilgili*/
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+/*Login butonu ile ilgili*/
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+    /*Login butonu ile ilgili*/
+    .dropdown-toggle i {
+        margin-right: 8px;
+    }
+/*Login butonu ile ilgili*/
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0; /* Menü sağa hizalı */
+    min-width: 150px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 1000;
+}
+    /*Login butonu ile ilgili*/
+    .dropdown-menu a {
+        display: block;
+        padding: 10px;
+        color: #333;
+        text-decoration: none;
+    }
+        /*Login butonu ile ilgili*/
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+/*Login butonu ile ilgili*/
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+
+#category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none; /* Varsayılan olarak gizli */
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    width: 200px;
+}
+
+    #category-list li {
+        margin: 0;
+    }
+
+        #category-list li a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+            #category-list li a:hover {
+                background-color: #f1f1f1;
+            }
+
+.menu-item {
+    position: relative;
+}

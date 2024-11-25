@@ -1,0 +1,140 @@
+﻿@using Book_Commerce.Models
+@using DAL.Data
+@model List<BookViewModel>
+
+@inject AppDbContext _context
+<h1>BOOK_COMMERCE</h1>
+@{
+	var userRole = Context.Session.GetString("IsAdmin");
+	var loggedInUserId = Context.Session.GetInt32("UserId");
+	
+}
+
+
+
+
+   
+    <!-- Login Dropdown Butonu -->
+    <div class="navbar">
+        <div class="dropdown">
+            <div class="dropdown-toggle">
+                <i class="fas fa-user"></i> Giriş Yap
+            </div>
+            <div class="dropdown-menu">
+                <a href="/Account/Login">Giriş Yap</a>
+                <a href="/Account/Register">Üye Ol</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Kararma efekti için overlay -->
+    <div id="overlay"></div>
+<div class="divider"></div>
+
+<div id="container">
+    <div id="searchbar">
+        <form action="/" method="get">
+            <input type="text" placeholder="Kitap, Elektronik, Oyuncak, Kırtasiyede ürün, kategori ve marka ara..." class="search-box">
+            <button class="search-button">ARA</button>
+          
+
+        </form>
+        
+    </div>
+   <div id="favorite-list">
+    <a href="#" class="favorite-list">
+        <span class="icon">&#9825;</span> <!-- Kalp ikonu -->
+        Favori Listem
+    </a>
+    </div> 
+    
+    <div id="cart">
+        <a href="#">🛒 My Cart</a>
+    </div>
+</div>
+<h1><a href="#"><img src="~/Images/LOGO2.jpeg" width="121" height="100" alt="Logo" class="left-image" /></a></h1>
+<!-- Menü -->
+   <!-- Menü -->
+   <div id="menu">
+    <ul id="navblue" style="background-color:blue">
+        <!-- Kitap Menü Öğesi -->
+        <li class="menu-item">
+            <a href="kitaplar.html" onclick="goToCategoryPage()" onmouseover="showCategories('kitap')" onmouseout="hideCategories()">KİTAP</a>
+            <ul id="category-list">
+                <!-- Alt kategoriler buraya dinamik olarak yüklenecek -->
+            </ul>
+        </li>
+        <li><a href="#" onmouseover="showCategories('elektronik')" onmouseout="hideCategories()">ELEKTRONİK</a></li>
+        <li><a href="#"><b>BİLGİSAYAR,TABLET</b></a></li>
+        <li><a href="#"><b>HOBBY, OYUNCAK</b></a></li>
+        <li> <a href="#"><b>MÜZİK, HEDİYELİK</b></a</li>
+        <li> <a href="#"><b>SPOR,OUTDOOR</b></a></li></li>
+        
+    </ul>
+</div>
+
+ <!-- Sol alt tarafta Kategoriler -->
+ <div id="sidebar">
+    <h3>Kategoriler</h3>
+    <ul id="category-list">
+        <!-- Kategoriler buraya dinamik olarak gelecek -->
+    </ul>
+</div>
+
+
+    <!-- Sol alt tarafta Kategoriler -->
+    <div id="sidebar">
+        <h3>Kategoriler</h3>
+        <ul id="category-list">
+            <!-- Kategoriler buraya dinamik olarak gelecek -->
+        </ul>
+    </div>
+
+    <script>
+        // Alt kategorileri gösterecek fonksiyon
+        function showCategories(category) {
+            const categoryList = document.getElementById('category-list');
+            categoryList.innerHTML = ''; // Önce temizle
+
+            let subCategories = [];
+            if (category === 'kitap') {
+                subCategories = ['Roman', 'Bilim Kurgu', 'Aşk'];
+            } else if (category === 'elektronik') {
+                subCategories = ['Telefon', 'Bilgisayar', 'Tablet', 'Televizyon'];
+            }
+
+            subCategories.forEach(function(subCategory) {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#">${subCategory}</a>`;
+                categoryList.appendChild(li);
+            });
+
+            // Kategorileri göster
+            categoryList.style.display = 'block';
+        }
+
+        // Alt kategorileri gizle
+        function hideCategories() {
+            const categoryList = document.getElementById('category-list');
+            categoryList.style.display = 'none';
+        }
+
+        // Kategori sayfasına git
+        function goToCategoryPage() {
+            window.location.href = 'kitaplar.html'; // Kitaplar sayfasına yönlendirir
+        }
+    </script>
+
+<script>
+    document.querySelector('.login-btn').addEventListener('click', function() {
+        var dropdownContent = document.querySelector('.dropdown-content');
+        if (dropdownContent.style.display === 'block') {
+            dropdownContent.style.display = 'none';
+        } else {
+            dropdownContent.style.display = 'block';
+        }
+    });
+    </script>
+    
+

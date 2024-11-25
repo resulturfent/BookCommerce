@@ -1,0 +1,27 @@
+﻿@model Book_Commerce.Models.UserViewModel
+
+
+<h1>Giriş Yap</h1>
+<form asp-controller="Account" asp-action="Login" method="post">
+    <div class="form-group">
+        <label for="Username">Kullanıcı Adı: </label>
+        <input type="type" class="form-control" name="Username" />
+    </div>
+    <div class="form-group">
+        <label for="Password">Parola: </label>
+        <input type="password" class="form-control" name="Password" />
+    </div>
+    <button type="submit" class="btn btn-primary">Giriş Yap</button>
+    @if (ViewBag.Hata != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Hata
+        </div>
+    }
+</form>
+<a asp-action="Register" asp-controller="Account">Kayıtlı değilseniz tıklayın.</a>
+
+
+@*
+	Şifre veya kullanıcı adı yanlış girildiğinde uyarı mesajı gösterin
+*@

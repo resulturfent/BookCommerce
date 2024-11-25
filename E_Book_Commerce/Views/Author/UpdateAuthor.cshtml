@@ -1,0 +1,19 @@
+﻿@using Book_Commerce.Models
+@model AuthorViewModel
+
+<h2>Update Author</h2>
+
+<form asp-controller="Author" asp-action="UpdateAuthor" method="post" enctype="multipart/form-data">
+    <input hidden name="authorId" value="@Model.Id" />
+    <div class="form-group">
+        <label for="AuthorName">Author Name </label>
+        <input type="text" class="form-control" name="AuthorName" />
+    </div>
+    <div class="form-group">
+        <label for="AuthorSurame">Author Surname </label>
+        <input type="text" class="form-control" name="AuthorSurname" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Author</button>
+</form>
+
