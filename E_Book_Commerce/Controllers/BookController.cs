@@ -41,7 +41,24 @@ namespace Book_Commerce.Controllers
             return View(bookViewModel);
         }
 
-        [HttpPost]
+        [HttpGet]
+		public async Task<IActionResult> BookList()
+		{
+			var books = await _bookService.GetAllBooks();
+			ViewBag.Categories = await _categoryService.GetAllCategories();
+			var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
+
+			if (books == null || !books.Any())
+			{
+				// Eğer liste boşsa, kullanıcıya bilgi ver.
+				ViewBag.Message = "Şu anda görüntülenecek bir kitap bulunmamaktadır.";
+				return View(new List<BookViewModel>()); // Boş bir liste gönder
+			}
+
+			return View(bookViewModel);
+		}
+
+		[HttpPost]
         public async Task<IActionResult> Index(List<int> categoryIds)
         {
             //var allPosts = await _bookService.get(categoryIds);
