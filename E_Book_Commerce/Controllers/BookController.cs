@@ -139,7 +139,7 @@ namespace Book_Commerce.Controllers
         {
 
             await _bookService.DeleteBook(bookId);
-            return RedirectToAction("Index", "Book");
+            return RedirectToAction("BookListAdmin", "Book");
         }
         [HttpGet]
         public async Task<IActionResult> UpdateBook(int bookId)
@@ -169,31 +169,95 @@ namespace Book_Commerce.Controllers
             var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
             // ViewBag.Categories = await _categoryService.GetAllCategories();
             return View(bookViewModel);
-        } 
+        }
         #endregion
 
         #region Book Admin işlemleri
 
         [HttpGet]
-		public async Task<IActionResult> BookListAdmin()
-		{
-			var books = await _bookService.GetAllBooks();
-			ViewBag.Categories = await _categoryService.GetAllCategories();
-			var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
+        public async Task<IActionResult> BookListAdmin()
+        {
+            var books = await _bookService.GetAllBooks();
+            ViewBag.Categories = await _categoryService.GetAllCategories();
+            var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
 
-			if (books == null || !books.Any())
-			{
-				// Eğer liste boşsa, kullanıcıya bilgi ver.
-				ViewBag.Message = "Şu anda görüntülenecek bir kitap bulunmamaktadır.";
-				return View(new List<BookViewModel>()); // Boş bir liste gönder
-			}
+            if (books == null || !books.Any())
+            {
+                // Eğer liste boşsa, kullanıcıya bilgi ver.
+                ViewBag.Message = "Şu anda görüntülenecek bir kitap bulunmamaktadır.";
+                return View(new List<BookViewModel>()); // Boş bir liste gönder
+            }
 
-			return View(bookViewModel);
-		}
+            return View(bookViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddBookAdmin()
+        {
+            var allAuthors = await _authorService.GetAllAuthors();
+            ViewBag.Authors = allAuthors;
+
+            // AuthorDto listesini SelectListItem listesine dönüştürün
+            ViewBag.AuthorList = allAuthors.Select(a => new SelectListItem
+            {
+                Value = a.Id.ToString(), // AuthorDto içinde Id alanını kullanın
+                Text = $"{a.AuthorName} {a.AuthorSurname}"      // Ad ve Soyad birleştiriliyor
+
+            }).ToList();
+            var allCategories = await _categoryService.GetAllCategories();
+            ViewBag.Categories = allCategories;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBookAdmin(BookViewModel bookViewModel, List<int> authorIds, List<int> categoryIds)
+        {
+            if (bookViewModel.PhotoUrl != null)
+            {
+                var fileName = Path.GetFileName(bookViewModel.PhotoUrl.FileName);
+                var filePath = Path.Combine("wwwroot", "Images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await bookViewModel.PhotoUrl.CopyToAsync(stream);
+                }
+                bookViewModel.Photo = fileName;
+            }
+            var userId = HttpContext.Session.GetInt32("UserId");
+            //var userId = 2;
+
+            if (userId == null)
+            {
+                ViewBag.Hata = "Kullanıcı girişi yapılmamış. Kitap eklemek için giriş yapınız.";
+                return View(bookViewModel);
+            }
+
+            // BookDto'ya UserId'yi ekleyin
+            var bookDto = _mapper.Map<BookDto>(bookViewModel);
+            bookDto.UserId = userId.Value;
+
+
+            await _bookService.CreateBook(bookDto);
+
+            // await _bookService.CreateBook(_mapper.Map<BookDto>(bookViewModel)); 
+            //yukarıdaki kod ile book view model bookdto ya map lıyoruz. ardından book service teki create booka direkt atama yapıyoruz. ancak bu kod her nedense çalışmadı. daha yukarıdaki BookDto ya UserId ekleyin kısmını chat gpt den aldım ve uyguladım. burada UserId li kitap ekleme işlemini yapabildim. 
+
+            var newBook = await _bookService.GetAllBooks();
+            var newestBook = newBook.OrderByDescending(x => x.Id).FirstOrDefault();
+            foreach (var item in authorIds)
+            {
+
+                await _bookService.AddBookAuthor(new BookAuthorDto { AuthorId = item, BookId = newestBook.Id });
+            }
+            foreach (var item in categoryIds)
+            {
+                await _bookService.AddBookCategory(new BookCategoryDto { CategoryId = item, BookId = newestBook.Id });
+            }
+            return RedirectToAction("BookListAdmin", "Book");
+        }
 
 
 
-
-		#endregion
-	}
+        #endregion
+    }
 }

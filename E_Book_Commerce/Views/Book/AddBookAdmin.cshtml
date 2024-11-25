@@ -1,0 +1,121 @@
+﻿@using Book_Commerce.Models
+@model BookViewModel
+
+
+<div class="container mt-5">
+    <h1>Add Book</h1>
+
+    <form id="registerForm" asp-controller="Book" asp-action="AddBookAdmin" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="Title">Title:</label>
+            <input id="nameId" type="text" class="form-control" name="Title" required />
+            <span id="nameError" class="text-danger"></span>
+        </div>
+        @{
+            var sortedAuthors = ((IEnumerable<dynamic>)ViewBag.Authors)
+            .OrderBy(item => item.GetType().GetProperty("AuthorName").GetValue(item))
+            .ToList();
+        }
+        <div class="form-group">
+            <label for="AuthorName">Select Author:</label>
+            @* Aşğıdaki bölümde name yerine authorIds yazdığımızda veri tabanında bookauthor tablosu etkilendi. *@
+            <select name="authorIds" class="form-control">
+                @foreach (var item in sortedAuthors)
+                {
+                    <option value="@item.GetType().GetProperty("Id").GetValue(item)" name="authorIds">
+                        <p>@item.GetType().GetProperty("AuthorName").GetValue(item)</p>
+                        <p>@item.GetType().GetProperty("AuthorSurname").GetValue(item)</p>
+                    </option>
+                }
+            </select>
+
+            @* <span asp-validation-for="AuthorId" class="text-danger"></span> *@
+        </div>
+        @{
+            var sortedCategories = ((IEnumerable<dynamic>)ViewBag.Categories)
+            .OrderBy(item => item.GetType().GetProperty("CategoryName").GetValue(item))
+            .ToList();
+        }
+
+        <div class="form-group">
+            <label for="CategoryName">Select Category:</label>
+            @* Aşğıdaki bölümde name yerine categoryIds yazdığımızda veri tabanında bookcategory tablosu etkilendi. *@
+            <select name="categoryIds" class="form-control">
+                @foreach (var item in sortedCategories)
+                {
+                    <option value="@item.GetType().GetProperty("Id").GetValue(item)">
+                        @item.GetType().GetProperty("CategoryName").GetValue(item)
+                    </option>
+                }
+            </select>
+            @*  <select name="categoryIds" class="form-control">
+            @foreach (var item in ViewBag.Categories)
+            {
+            <option value="@item.GetType().GetProperty("Id").GetValue(item)" name="categoryIds">
+            <p>@item.GetType().GetProperty("CategoryName").GetValue(item)</p>
+            </option>
+            }
+            </select> *@
+
+            @* <span asp-validation-for="AuthorId" class="text-danger"></span> *@
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Description:</label>
+            <textarea class="form-control" name="Description" required></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+            <span>@ViewBag.SurnameHata</span>
+        </div>
+
+        <div class="form-group">
+            <label for="PhotoUrl">Loading Photo:</label>
+            <input type="file" class="form-control" name="PhotoUrl" accept="image/*" />
+        </div>
+
+        <div class="form-group">
+            <label for="PublishingHouse">Publishing House:</label>
+            <input type="text" class="form-control" name="PublishingHouse" required />
+            <span>@ViewBag.MailHata</span>
+        </div>
+
+        <div class="form-group">
+            <label for="ISBN">ISBN No:</label>
+            <input type="text" class="form-control" name="ISBN" required />
+        </div>
+
+        <div class="form-group">
+            <label for="PublishedDate">Published Date:</label>
+            <input type="date" class="form-control" name="PublishedDate" required />
+            <span>@ViewBag.PasswordHata</span>
+        </div>
+
+        <div class="form-group">
+            <label for="UnitPrice">Unit Price:</label>
+            <input type="number" step="0.01" class="form-control" name="UnitPrice" required />
+        </div>
+
+        <div class="form-group">
+            <label for="UnitInStocks">Unit In Stocks:</label>
+            <input type="number" class="form-control" name="UnitInStocks" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary" onclick="validateForm(event)">Create Book</button>
+    </form>
+</div>
+<script>
+    function validateForm(event) {
+        event.preventDefault();
+        let nameInput = document.getElementById("nameId").value.trim();
+        let error = document.getElementById("nameError");
+        let form = document.getElementById("registerForm");
+
+        if (nameInput === "") {
+            error.innerText = "Ad alanı boş bırakılamaz.";
+        } else {
+            error.innerText = ""; // Hata mesajını temizle
+            form.submit();
+        }
+    }
+</script>
+
+

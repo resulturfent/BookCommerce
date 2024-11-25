@@ -50,11 +50,12 @@ namespace BLL.ConcreteService
 
         public async Task DeleteBook(int bookId)
         {
-            var book = await _bookRepository.GetAllAsync();
-            foreach (var item in book)
-            {
-                await _bookRepository.DeleteAsync(item.Id);
-            }
+            //var book = await _bookRepository.GetByIdAsync(bookId);
+            //foreach (var item in book)
+            //{
+            //    await _bookRepository.DeleteAsync(item.Id);
+            //}
+            await _bookRepository.DeleteAsync(bookId);
         }
 
         public async Task<List<BookDto>> GetAllBooks()
