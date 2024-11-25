@@ -1,0 +1,6 @@
+﻿
+Layout için kullanılan Template linki
+https://github.com/templatesJungle/booksaw-free-version
+
+CRUD işlemleri içi n kullanılan template linki
+https://bootsnipp.com/snippets/BDDND

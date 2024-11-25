@@ -16,6 +16,7 @@ namespace Book_Commerce.Controllers
         private readonly IAuthorService _authorService;
         private readonly AppDbContext _context;
 
+        #region Book Kullanıcı işlemleri
         public BookController(IBookService bookService, IMapper mapper, ICategoryService categoryService, IAuthorService authorService, AppDbContext context)
         {
             _bookService = bookService;
@@ -30,35 +31,37 @@ namespace Book_Commerce.Controllers
             var books = await _bookService.GetAllBooks();
             ViewBag.Categories = await _categoryService.GetAllCategories();
             var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
-           
+
             if (books == null || !books.Any())
             {
                 // Eğer liste boşsa, kullanıcıya bilgi ver.
                 ViewBag.Message = "Şu anda görüntülenecek bir kitap bulunmamaktadır.";
                 return View(new List<BookViewModel>()); // Boş bir liste gönder
             }
-            
+
             return View(bookViewModel);
         }
 
         [HttpGet]
-		public async Task<IActionResult> BookList()
-		{
-			var books = await _bookService.GetAllBooks();
-			ViewBag.Categories = await _categoryService.GetAllCategories();
-			var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
+        public async Task<IActionResult> BookList()
+        {
+            var books = await _bookService.GetAllBooks();
+            ViewBag.Categories = await _categoryService.GetAllCategories();
+            var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
 
-			if (books == null || !books.Any())
-			{
-				// Eğer liste boşsa, kullanıcıya bilgi ver.
-				ViewBag.Message = "Şu anda görüntülenecek bir kitap bulunmamaktadır.";
-				return View(new List<BookViewModel>()); // Boş bir liste gönder
-			}
+            if (books == null || !books.Any())
+            {
+                // Eğer liste boşsa, kullanıcıya bilgi ver.
+                ViewBag.Message = "Şu anda görüntülenecek bir kitap bulunmamaktadır.";
+                return View(new List<BookViewModel>()); // Boş bir liste gönder
+            }
 
-			return View(bookViewModel);
-		}
+            return View(bookViewModel);
+        }
 
-		[HttpPost]
+
+
+        [HttpPost]
         public async Task<IActionResult> Index(List<int> categoryIds)
         {
             //var allPosts = await _bookService.get(categoryIds);
@@ -115,8 +118,8 @@ namespace Book_Commerce.Controllers
 
             await _bookService.CreateBook(bookDto);
 
-           // await _bookService.CreateBook(_mapper.Map<BookDto>(bookViewModel)); 
-           //yukarıdaki kod ile book view model bookdto ya map lıyoruz. ardından book service teki create booka direkt atama yapıyoruz. ancak bu kod her nedense çalışmadı. daha yukarıdaki BookDto ya UserId ekleyin kısmını chat gpt den aldım ve uyguladım. burada UserId li kitap ekleme işlemini yapabildim. 
+            // await _bookService.CreateBook(_mapper.Map<BookDto>(bookViewModel)); 
+            //yukarıdaki kod ile book view model bookdto ya map lıyoruz. ardından book service teki create booka direkt atama yapıyoruz. ancak bu kod her nedense çalışmadı. daha yukarıdaki BookDto ya UserId ekleyin kısmını chat gpt den aldım ve uyguladım. burada UserId li kitap ekleme işlemini yapabildim. 
 
             var newBook = await _bookService.GetAllBooks();
             var newestBook = newBook.OrderByDescending(x => x.Id).FirstOrDefault();
@@ -166,6 +169,31 @@ namespace Book_Commerce.Controllers
             var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
             // ViewBag.Categories = await _categoryService.GetAllCategories();
             return View(bookViewModel);
-        }
-    }
+        } 
+        #endregion
+
+        #region Book Admin işlemleri
+
+        [HttpGet]
+		public async Task<IActionResult> BookListAdmin()
+		{
+			var books = await _bookService.GetAllBooks();
+			ViewBag.Categories = await _categoryService.GetAllCategories();
+			var bookViewModel = _mapper.Map<List<BookViewModel>>(books);
+
+			if (books == null || !books.Any())
+			{
+				// Eğer liste boşsa, kullanıcıya bilgi ver.
+				ViewBag.Message = "Şu anda görüntülenecek bir kitap bulunmamaktadır.";
+				return View(new List<BookViewModel>()); // Boş bir liste gönder
+			}
+
+			return View(bookViewModel);
+		}
+
+
+
+
+		#endregion
+	}
 }
