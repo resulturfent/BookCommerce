@@ -74,7 +74,7 @@ namespace BLL.ConcreteService
 
         public  async Task<decimal> GetBookPriceById(int bookId)
         {
-            var result =  _bookRepository.GetById(bookId);
+            var result =await  _bookRepository.GetByIdAsync(bookId);
 
             return  result.UnitPrice;
         }
