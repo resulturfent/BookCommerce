@@ -24,33 +24,55 @@ namespace BLL.ConcreteService
             _cartItemRepository = cartItemRepository;
             _mapper = mapper;
         }
-        public async Task AddToCartAsync(int userId, int productId, int quantity) 
+        public async Task AddToCartAsync(int userId, int bookId, int quantity) 
         {
-            var carts = await _cartRepository.GetAllAsync(); 
-            var cart = carts.FirstOrDefault(c => c.UserId == userId);
-            if (cart == null) 
-            { 
-                cart = new Cart { UserId = userId, CartItems = new List<CartItem>() }; 
-                await _cartRepository.AddAsync(cart); 
-            } 
-            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId); 
-            if (cartItem == null) 
-            { 
-                cartItem = new CartItem { ProductId = productId, Quantity = quantity, CartId = cart.Id }; cart.CartItems.Add(cartItem); 
-                await _cartItemRepository.AddAsync(cartItem); 
-            } 
-            else 
-            { 
-                cartItem.Quantity += quantity; await _cartItemRepository.UpdateAsync(cartItem);
-            } 
+
+            try
+            {
+                Cart addCart=new Cart();
+                addCart.UserId = userId;
+                addCart.BookId = bookId;
+                addCart.Quantity = quantity;
+                addCart.AddTime=DateTime.Now;
+                addCart.IsActive = true;
+
+                _cartRepository.AddAsync(addCart);
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            #region Chat GBT
+            //var carts = await _cartRepository.GetAllAsync(); 
+            //var cart = carts.FirstOrDefault(c => c.UserId == userId);
+
+            //if (cart == null) 
+            //{ 
+            //    cart = new Cart { UserId = userId, CartItems = new List<CartItem>() }; 
+            //    await _cartRepository.AddAsync(cart); 
+            //} 
+            //var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == bookId); 
+            //if (cartItem == null) 
+            //{ 
+            //    cartItem = new CartItem { ProductId = bookId, Quantity = quantity, CartId = cart.Id }; cart.CartItems.Add(cartItem); 
+            //    await _cartItemRepository.AddAsync(cartItem); 
+            //} 
+            //else 
+            //{ 
+            //    cartItem.Quantity += quantity; await _cartItemRepository.UpdateAsync(cartItem);
+            //}  
+            #endregion
         }
-        public async Task RemoveFromCartAsync(int userId, int productId)
+        public async Task RemoveFromCartAsync(int userId, int bookId)
         {
             var carts = await _cartRepository.GetAllAsync(); 
             var cart = carts.FirstOrDefault(c => c.UserId == userId); 
             if (cart != null) 
             { 
-                var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId); 
+                var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == bookId); 
                 if (cartItem != null) 
                 { 
                     cart.CartItems.Remove(cartItem); 

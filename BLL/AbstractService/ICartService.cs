@@ -9,8 +9,8 @@ namespace BLL.AbstractService
 {
     public interface ICartService
     {
-        Task AddToCartAsync(int userId, int productId, int quantity); 
-        Task RemoveFromCartAsync(int userId, int productId); 
+        Task AddToCartAsync(int userId, int bookId, int quantity); 
+        Task RemoveFromCartAsync(int userId, int bookId); 
         Task<CartDto> GetCartByUserIdAsync(int userId);
     }
 }

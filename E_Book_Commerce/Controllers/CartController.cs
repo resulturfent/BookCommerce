@@ -11,18 +11,21 @@ namespace Book_Commerce.Controllers
     {
         private readonly IBookService _bookService;
         private readonly IMapper _mapper;
+        private readonly ICartService _cartService;
         //private readonly ICategoryService _categoryService;
         //private readonly IAuthorService _authorService;
         private readonly AppDbContext _context;
 
-      
+
         public CartController(
             IBookService bookService, IMapper mapper,
             //ICategoryService categoryService, 
             //IAuthorService authorService, 
+            ICartService cartService,
             AppDbContext context)
         {
             _bookService = bookService;
+            _cartService = cartService;
             _mapper = mapper;
             //_categoryService = categoryService;
             //_authorService = authorService;
@@ -38,23 +41,34 @@ namespace Book_Commerce.Controllers
 
         public IActionResult AddCart(int bookId)
         {
-            if (bookId > 0)
+            try
             {
-                //session'a eklenecek bookId
-                HttpContext.Session.SetInt32("cartBookId", bookId);
-                //2,3,15=>
-
-                var getBookId = HttpContext.Session.GetInt32("cartBookId");
-                if (getBookId != null)
+                if (bookId > 0)
                 {
-                    var getBookPrice = _bookService.GetBookPriceById(bookId);
+                    //session'a eklenecek bookId
+                    //HttpContext.Session.SetInt32("cartBookId", bookId);
+                    //2,3,15=>
 
-                    return Json(getBookPrice);
+                    int getUserId =Convert.ToInt32( HttpContext.Session.GetInt32("UserId"));
+                    var getBook = _bookService.GetBookById(bookId);
+
+                    if (getBook != null)
+                    {
+
+                        var getBookPrice = _bookService.GetBookPriceById(bookId);
+                        _cartService.AddToCartAsync(getUserId, bookId, 1);
+                        return Json(getBookPrice);
+                    }
+
                 }
-
+                return View();
             }
-            return View();
+            catch (Exception)
+            {
+
+                return View();
+            }
         }
-    } 
+    }
 
 }

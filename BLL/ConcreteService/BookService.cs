@@ -67,7 +67,7 @@ namespace BLL.ConcreteService
 
         public async Task<Book> GetBookById(int bookId)
         {
-            var getBook=await _bookAuthorRepository.GetByIdAsync(bookId);
+            var getBook=await _bookRepository.GetByIdAsync(bookId);
 
             return _mapper.Map<Book>(getBook);
         }
