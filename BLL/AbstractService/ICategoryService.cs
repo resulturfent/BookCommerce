@@ -13,5 +13,6 @@ namespace BLL.AbstractService
         Task<List<CategoryDto>> GetAllCategories();
         Task DeleteCategory(int categoryId);
         Task UpdateCategory(CategoryDto categoryDto);
-    }
+		
+	}
 }

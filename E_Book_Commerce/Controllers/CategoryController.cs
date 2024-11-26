@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.AbstractService;
+using BLL.ConcreteService;
 using BLL.Dtos;
 using Book_Commerce.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,17 @@ namespace Book_Commerce.Controllers
             await _categoryService.CreateCategory(_mapper.Map<CategoryDto>(categoryViewModel));
             return RedirectToAction("Index", "Category");
         }
-        [HttpPost]
+		public IActionResult AddCategoryAdmin()
+		{
+			return View();
+		}
+		[HttpPost]
+		public async Task<IActionResult> AddCategoryAdmin(CategoryViewModel categoryViewModel)
+		{
+			await _categoryService.CreateCategory(_mapper.Map<CategoryDto>(categoryViewModel));
+			return RedirectToAction("Index", "Category");
+		}
+		[HttpPost]
         public async Task<IActionResult> Delete(int categoryId)
         {
             await _categoryService.DeleteCategory(categoryId);
@@ -75,5 +86,14 @@ namespace Book_Commerce.Controllers
             await _categoryService.UpdateCategory(_mapper.Map<CategoryDto>(categoryViewModel));
             return RedirectToAction("Index", "Category");
         }
-    }
+		[HttpGet]
+		public async Task<IActionResult> GetAllCategoryList()
+		{
+			var categories = await _categoryService.GetAllCategories() ?? new List<CategoryDto>();
+			var categoryViewModel = _mapper.Map<List<CategoryViewModel>>(categories);
+            // ViewBag.Categories = await _categoryService.GetAllCategories();
+            ViewBag.CategoryList = categories; // Kategori listesini ViewBag ile gönder
+            return View(categoryViewModel);
+		}
+	}
 }

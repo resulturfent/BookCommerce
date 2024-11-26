@@ -5,7 +5,10 @@
 
 
 <h1>Categories</h1>
+<div>
+    <a href="~/Category/AddCategoryAdmin" class="btn btn-success">Kategori Ekle</a>
 
+</div>
 
 <table class="table">
     <thead>
@@ -26,13 +29,13 @@
 
 
                 <td>
-                    <form asp-controller="Category" asp-action="Delete" method="post">
+                    <form asp-controller="Category" asp-action="Delete" data-action="delete" method="post">
                         <input type="hidden" name="categoryId" value="@category.Id" />
                         <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</button>
                     </form>
                 </td>
                 <td>
-                    <form asp-controller="Category" asp-action="UpdateCategory" method="get">
+                    <form asp-controller="Category" asp-action="UpdateCategory" data-action="update" method="get">
                         <input type="hidden" name="categoryId" value="@category.Id" />
                         <button type="submit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Update</button>
                     </form>
@@ -42,10 +45,21 @@
     </tbody>
 </table>
 <script>
-    document.querySelectorAll('form').forEach(form => {
+    // Delete işlemi için
+    document.querySelectorAll('form[data-action="delete"]').forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (confirm('Are you sure you want to delete this category?')) {
+                this.submit();
+            }
+        });
+    });
+
+    // Update işlemi için
+    document.querySelectorAll('form[data-action="update"]').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to update this category?')) {
                 this.submit();
             }
         });

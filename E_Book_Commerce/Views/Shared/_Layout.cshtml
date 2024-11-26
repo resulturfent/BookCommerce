@@ -43,10 +43,10 @@
 									<a asp-action="BookListAdmin" asp-controller="Book">Kitap İşlemleri</a>
 								</li>
 								<li>
-									<a href="#">Yazar İşlemleri</a>
+									<a asp-action="AuthorList" asp-controller="Author">Yazar İşlemleri</a>
 								</li>
 								<li>
-									<a href="#">Kategori İşlemleri</a>
+									<a asp-action="Index" asp-controller="Category">Kategori İşlemleri</a>
 								</li>
 								
 							</ul>
@@ -102,7 +102,7 @@
 								<ul class="menu-list">
 									<li class="menu-item active"><a asp-controller="Home" asp-action="Index">Home</a></li>
 									<li class="menu-item has-sub">
-										<a href="#pages" class="nav-link">KATEGORİLER</a>
+										<a href="~/Category/GetAllCategoryList">KATEGORİLER</a>
 
 										<ul>
 											<li><a href="about.html">About <span class="badge bg-dark">PRO</span></a></li>

@@ -37,6 +37,27 @@ namespace Book_Commerce.Controllers
             ViewBag.Authors = allAuthors;
             return View(allAuthors);
         }
+
+        public async Task<IActionResult> AuthorList()
+        {
+            var authors = await _authorService.GetAllAuthors();
+            var authorViewModel = _mapper.Map<List<AuthorViewModel>>(authors);
+
+            return View(authorViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AuthorList(List<int> authorIds)
+        {
+            //var allPosts = await _bookService.get(categoryIds);
+            //var newAllPosts = _mapper.Map<List<BookViewModel>>(allPosts);
+
+            var authors = await _authorService.GetAllAuthors();
+            var allAuthors = _mapper.Map<List<AuthorViewModel>>(authors);
+
+            ViewBag.Authors = allAuthors;
+            return View(allAuthors);
+        }
         public IActionResult AddAuthor()
         {
             return View();
@@ -45,14 +66,26 @@ namespace Book_Commerce.Controllers
         public async Task<IActionResult> AddAuthor(AuthorViewModel authorViewModel)
         {
             await _authorService.CreateAuthor(_mapper.Map<AuthorDto>(authorViewModel));
-            return RedirectToAction("Index", "Author");
+            return RedirectToAction("", "Author");
         }
 
+		public IActionResult AddAuthorAdmin()
+		{
+			return View();
+		}
+
         [HttpPost]
+		public async Task<IActionResult> AddAuthorAdmin(AuthorViewModel authorViewModel)
+		{
+			await _authorService.CreateAuthor(_mapper.Map<AuthorDto>(authorViewModel));
+			return RedirectToAction("AuthorList", "Author");
+		}
+
+		[HttpPost]
         public async Task<IActionResult> Delete(int authorId)
         {
             await _authorService.DeleteAuthor(authorId);
-            return RedirectToAction("Index", "Author");
+            return RedirectToAction("AuthorList", "Author");
 
         }
 
@@ -75,7 +108,7 @@ namespace Book_Commerce.Controllers
         {
             authorViewModel.Id = authorId;
             await _authorService.UpdateAuthor(_mapper.Map<AuthorDto>(authorViewModel));
-            return RedirectToAction("Index", "Author");
+            return RedirectToAction("AuthorList", "Author");
         }
     }
 }

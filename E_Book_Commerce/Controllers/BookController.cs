@@ -141,6 +141,7 @@ namespace Book_Commerce.Controllers
             await _bookService.DeleteBook(bookId);
             return RedirectToAction("BookListAdmin", "Book");
         }
+
         [HttpGet]
         public async Task<IActionResult> UpdateBook(int bookId)
         {
@@ -160,7 +161,7 @@ namespace Book_Commerce.Controllers
 
             bookViewModel.Id = bookId;
             await _bookService.UpdateBook(_mapper.Map<BookDto>(bookViewModel));
-            return RedirectToAction("Index", "Book");
+            return RedirectToAction("UpdateBook", "Book");
         }
         [HttpGet]
         public async Task<IActionResult> GetAllBooks()
