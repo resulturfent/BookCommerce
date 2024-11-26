@@ -1,5 +1,12 @@
-﻿@using BLL.Dtos;
+﻿@{
+    ViewData["Title"] = "BookListAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using BLL.Dtos;
 @model BookDto
+
+
 
 <div class="container mt-5">
     <h1>Update Book</h1>
@@ -15,8 +22,8 @@
 
         @{
             var sortedAuthors = ((IEnumerable<dynamic>)ViewBag.Authors)
-                .OrderBy(item => item.GetType().GetProperty("AuthorName").GetValue(item))
-                .ToList();
+            .OrderBy(item => item.GetType().GetProperty("AuthorName").GetValue(item))
+            .ToList();
         }
         <div class="form-group">
             <label for="AuthorName">Select Author:</label>
@@ -35,8 +42,8 @@
 
         @{
             var sortedCategories = ((IEnumerable<dynamic>)ViewBag.Categories)
-                .OrderBy(item => item.GetType().GetProperty("CategoryName").GetValue(item))
-                .ToList();
+            .OrderBy(item => item.GetType().GetProperty("CategoryName").GetValue(item))
+            .ToList();
         }
         <div class="form-group">
             <label for="CategoryName">Select Category:</label>

@@ -4,46 +4,49 @@
  @inject AppDbContext _context
 
 
-<h1>Categories</h1>
-<div>
-    <a href="~/Category/AddCategoryAdmin" class="btn btn-success">Kategori Ekle</a>
 
-</div>
+<div class="container">
+    <h1>Categories</h1>
+    <div>
+        <a href="~/Category/AddCategoryAdmin" class="btn btn-success">Kategori Ekle</a>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Category Name</th>
+    </div>
 
-            <th scope="col">Delete</th>
-            <th scope="col">Update</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var category in Model)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>@category.Id</td>
-                <td>@category.CategoryName</td>
+                <th scope="col">Id</th>
+                <th scope="col">Category Name</th>
 
-
-                <td>
-                    <form asp-controller="Category" asp-action="Delete" data-action="delete" method="post">
-                        <input type="hidden" name="categoryId" value="@category.Id" />
-                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</button>
-                    </form>
-                </td>
-                <td>
-                    <form asp-controller="Category" asp-action="UpdateCategory" data-action="update" method="get">
-                        <input type="hidden" name="categoryId" value="@category.Id" />
-                        <button type="submit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Update</button>
-                    </form>
-                </td>
+                <th scope="col">Delete</th>
+                <th scope="col">Update</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.Id</td>
+                    <td>@category.CategoryName</td>
+
+
+                    <td>
+                        <form asp-controller="Category" asp-action="Delete" data-action="delete" method="post">
+                            <input type="hidden" name="categoryId" value="@category.Id" />
+                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form asp-controller="Category" asp-action="UpdateCategory" data-action="update" method="get">
+                            <input type="hidden" name="categoryId" value="@category.Id" />
+                            <button type="submit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Update</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 <script>
     // Delete işlemi için
     document.querySelectorAll('form[data-action="delete"]').forEach(form => {

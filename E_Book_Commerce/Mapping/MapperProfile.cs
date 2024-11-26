@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Dtos;
 using Book_Commerce.Models;
+using DAL.Entities;
 
 namespace Book_Commerce.Mapping
 {
@@ -16,7 +17,9 @@ namespace Book_Commerce.Mapping
             CreateMap<CategoryDto, CategoryViewModel>().ReverseMap();
             CreateMap<CartDto,CartItemViewModel>().ReverseMap();
             CreateMap<CartItemDto, CartItemViewModel>().ReverseMap();
-            CreateMap<CartDto, CartViewModel>().ReverseMap();
+            CreateMap<CartDto, CartViewModel>().ReverseMap(); 
+            //CreateMap<Book, BookViewModel>().ReverseMap();
+
 
         }
     }

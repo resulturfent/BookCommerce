@@ -65,6 +65,13 @@ namespace BLL.ConcreteService
             return _mapper.Map<List<BookDto>>(books);
         }
 
+        public async Task<Book> GetBookById(int bookId)
+        {
+            var getBook=await _bookAuthorRepository.GetByIdAsync(bookId);
+
+            return _mapper.Map<Book>(getBook);
+        }
+
         public async Task UpdateBook(BookDto bookDto)
         {
             var book = await _bookRepository.GetByIdAsync(bookDto.Id); // Id'yi bulma komutu. GetById
@@ -80,5 +87,7 @@ namespace BLL.ConcreteService
             //  book.Category.CategoryName = bookDto.CategoryDto.CategoryName;
 
         }
+
+     
     }
 }

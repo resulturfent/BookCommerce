@@ -143,23 +143,57 @@ namespace Book_Commerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateBook(int bookId)
+        public async Task<IActionResult> UpdateBook(int Id)
         {
-            var books = await _bookService.GetAllBooks();
-            foreach (var item in books)
+            try
             {
-                if (item.Id == bookId)
+                var books = _bookService.GetBookById(Id);
+
+                if (books != null)
                 {
-                    return View(_mapper.Map<BookViewModel>(item));
+                    var result = _mapper.Map<BookDto>(books);
+
+                    return View(result);
                 }
             }
+            catch (Exception)
+            {
+                return RedirectToAction("BookListAdmin", "Book");
+
+            }
+
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateBookAdmin(int Id)
+        {
+            try
+            {
+                var books = _bookService.GetBookById(Id);
+
+                if (books != null)
+                {
+                    var result = _mapper.Map<BookDto>(books);
+
+                    return View(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("BookListAdmin", "Book");
+
+            }
+
+            return View();
+        }
+
+
         [HttpPost]
-        public async Task<IActionResult> UpdateBook(int bookId, BookViewModel bookViewModel)
+        public async Task<IActionResult> UpdateBook(int bookUpdateId, BookViewModel bookViewModel)
         {
 
-            bookViewModel.Id = bookId;
+            bookViewModel.Id = bookUpdateId;
             await _bookService.UpdateBook(_mapper.Map<BookDto>(bookViewModel));
             return RedirectToAction("UpdateBook", "Book");
         }

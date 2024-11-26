@@ -1,4 +1,5 @@
 ﻿using BLL.Dtos;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,8 @@ namespace BLL.AbstractService
         Task UpdateBook(BookDto bookDto);
         Task AddBookAuthor(BookAuthorDto bookAuthorDto);
         Task AddBookCategory(BookCategoryDto bookCategoryDto);
+        Task<Book> GetBookById(int bookId); 
+
+
     }
 }
