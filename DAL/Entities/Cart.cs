@@ -14,6 +14,9 @@ namespace DAL.Entities
         public int BookId { get; set; }
         public DateTime AddTime { get; set; }
         public bool IsActive { get; set; }
+        public int Quantity { get; set; }
+
+        public List<CartItem> CartItems { get; set; }
 
 
     }
