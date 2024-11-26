@@ -56,7 +56,7 @@ namespace Book_Commerce.Controllers
 				{
 
 					var getBookPrice = _bookService.GetBookPriceById(bookId);
-					_cartService.AddToCartAsync((int)getUserId, bookId, 1);
+					_cartService.AddToCartAsync(Convert.ToInt32( getUserId), bookId, 1);
 					return Json(getBookPrice);
 				}
 
