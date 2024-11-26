@@ -25,7 +25,7 @@
                                     <figure class="product-style">
                                         @* <img src="/booksaw/images/@book.PhotoUrl" alt="Books" class="product-item"> *@
                                         <img src="/booksaw/images/product-item1.jpg" alt="Books" class="product-item">
-                                        <button type="button" class="add-to-cart" id="addCartId" data-product-tile="add-to-cart" onclick="AddCart('@book.Id')">
+                                        <button type="button" class="add-to-cart" id="addCartId" data-product-tile="add-to-cart" onclick="AddCart('@book.Id','@book.UnitPrice')">
                                             Add to
                                             Cart
                                         </button>
@@ -75,14 +75,15 @@
     <script>
 
 
-        function AddCart(bookId) {
-            // debugger;
+        function AddCart(bookId,bookPrice) {
+            debugger;
             $.ajax({
                 //js ile db işlemleri yapar
                 //sepet için cookie, session ya da db de sepet tablosu da yapılabilir
                 url: "/Cart/AddCart",//Controller altında method a gidecek
                 type: "POST",
-                data: { "bookId": bookId },//"bookId" (çift tırnak içinde bookId ile AddCart methodunda parametre olmalı)
+                data: { 'bookId': '' + bookId +'', 'bookPrice': ''+bookPrice+'' },//"bookId" (çift tırnak içinde bookId ile AddCart methodunda parametre olmalı)
+                // data: { 'coursesId': '' + courseId + '', 'coursePrice': '' + price + '' },
                 success: function (data) {
 
                     debugger;
@@ -96,7 +97,7 @@
 
                     var getQuantity = document.getElementById("cartQuantityId").innerText
                     var getPrice = document.getElementById("cartPriceId").innerText;
-                    getPrice =parseFloat( getPrice )+ data.result;
+                    getPrice =parseFloat( getPrice )+ data;
                     getQuantity = parseInt( getQuantity )+ 1;
                     document.getElementById("cartQuantityId").innerText = getQuantity;
                     document.getElementById("cartPriceId").innerText=getPrice;

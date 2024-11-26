@@ -15,5 +15,7 @@ namespace DAL.AbstractRepository
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
 		Task<T> GetById(int id);
+        
+
     }
 }

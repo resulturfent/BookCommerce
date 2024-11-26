@@ -72,12 +72,7 @@ namespace BLL.ConcreteService
             return _mapper.Map<Book>(getBook);
         }
 
-        public  async Task<decimal> GetBookPriceById(int bookId)
-        {
-            var result =await  _bookRepository.GetByIdAsync(bookId);
 
-            return  result.UnitPrice;
-        }
 
         public async Task UpdateBook(BookDto bookDto)
         {

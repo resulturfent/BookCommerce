@@ -40,7 +40,7 @@ namespace Book_Commerce.Controllers
 			return View();
 		}
 
-		public IActionResult AddCart(int bookId)
+		public IActionResult AddCart(int bookId,decimal bookPrice)
 		{
 			if (bookId > 0)
 			{
@@ -55,9 +55,10 @@ namespace Book_Commerce.Controllers
 				if (getBook != null)
 				{
 
-					var getBookPrice = _bookService.GetBookPriceById(bookId);
-					_cartService.AddToCartAsync(Convert.ToInt32( getUserId), bookId, 1);
-					return Json(getBookPrice);
+					//var getBookPrice = _bookService.GetBookPriceById(bookId);
+					var getAddCart=_cartService.AddToCartAsync(Convert.ToInt32( getUserId), bookId, 1);
+
+					return Json(bookPrice);
 				}
 
 			}

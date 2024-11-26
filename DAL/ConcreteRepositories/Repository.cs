@@ -52,7 +52,12 @@ namespace DAL.ConcreteRepositories
             return result;
         }
 
-        public async Task UpdateAsync(T entity)
+		//public async Task<T> GetObjectById(int id)
+		//{
+  //          return await _entities.FirstOrDefaultAsync(k => k.Id == id);
+		//}
+
+		public async Task UpdateAsync(T entity)
         {
             _entities.Update(entity);
             await _context.SaveChangesAsync();
