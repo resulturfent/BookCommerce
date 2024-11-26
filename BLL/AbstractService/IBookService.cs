@@ -17,6 +17,8 @@ namespace BLL.AbstractService
         Task AddBookAuthor(BookAuthorDto bookAuthorDto);
         Task AddBookCategory(BookCategoryDto bookCategoryDto);
         Task<Book> GetBookById(int bookId); 
+       Task<decimal> GetBookPriceById(int bookId);
+
 
 
     }

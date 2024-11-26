@@ -58,9 +58,9 @@
 								<i class="icon icon-user"></i><span>GİRİŞ</span>
 							</a>
 							<a href="~/Cart/CartIndex" class="cart for-buy">
-								<i class="icon icon-clipboard"></i><span>
-									Cart:(0
-									$)
+								<i class="icon icon-clipboard"></i><p id="cartQuantityId">0</p> Adet<span>
+									Cart:( <p id="cartPriceId">0</p>
+									TL)
 								</span>
 							</a>
 
@@ -315,6 +315,9 @@
 	<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
 	<link href="~/booksaw/css/datatableCSS.css" rel="stylesheet" />
 	@* <script src="~/booksaw/js/datatablejs.js"></script> *@
+
+	@RenderSection("Scripts",false);
+
 	<script>
 		$(document).ready(function () {
 			$('#datatable').dataTable();

@@ -8,10 +8,13 @@ namespace DAL.Entities
 {
     public class Cart : BaseEntity
     {
-        
-          //  public int Id { get; set; }
-            public int UserId { get; set; }
-            public List<CartItem> CartItems { get; set; }    
+
+        //  public int Id { get; set; }
+        public int UserId { get; set; }//Kulanıcı bilgilerini
+        public int BookId { get; set; }
+        public DateTime AddTime { get; set; }
+        public bool IsActive { get; set; }
+
 
     }
 }

@@ -41,6 +41,11 @@ namespace DAL.ConcreteRepositories
             return await _entities.ToListAsync();
         }
 
+        public T GetById(int id)
+        {
+            return _entities.FirstOrDefault(x => x.Id == id);
+        }
+
         public async Task<T> GetByIdAsync(int id)
         {
             var result= await _entities.FirstOrDefaultAsync(x => x.Id == id);

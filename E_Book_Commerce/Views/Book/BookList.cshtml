@@ -1,4 +1,5 @@
-﻿
+﻿@using Book_Commerce.Models
+@model List<BookViewModel>
 @{
     ViewData["Title"] = "BookList";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,104 +7,112 @@
 
 
 <section id="featured-books" class="py-5 my-5">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
 
-				<div class="section-header align-center">
-		
-					<h2 class="section-title">Bütün Kitaplar</h2>
-				</div>
+                <div class="section-header align-center">
 
-				<div class="product-list" data-aos="fade-up">
-					<div class="row">
+                    <h2 class="section-title">Bütün Kitaplar</h2>
+                </div>
 
-						<div class="col-md-3">
-							<div class="product-item">
-								<figure class="product-style">
-									<img src="/booksaw/images/product-item1.jpg" alt="Books" class="product-item">
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-										Add to
-										Cart
-									</button>
-								</figure>
-								<figcaption>
-									<h3>Simple way of piece life</h3>
-									<span>Armor Ramsey</span>
-									<div class="item-price">$ 40.00</div>
-								</figcaption>
-							</div>
-						</div>
+                <div class="product-list" data-aos="fade-up">
+                    <div class="row">
+                        @foreach (var book in Model)
+                        {
+                            <div class="col-md-3">
+                                <div class="product-item">
+                                    <figure class="product-style">
+                                        @* <img src="/booksaw/images/@book.PhotoUrl" alt="Books" class="product-item"> *@
+                                        <img src="/booksaw/images/product-item1.jpg" alt="Books" class="product-item">
+                                        <button type="button" class="add-to-cart" id="addCartId" data-product-tile="add-to-cart" onclick="AddCart('@book.Id')">
+                                            Add to
+                                            Cart
+                                        </button>
 
-						<div class="col-md-3">
-							<div class="product-item">
-								<figure class="product-style">
-									<img src="/booksaw/images/product-item2.jpg" alt="Books" class="product-item">
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-										Add to
-										Cart
-									</button>
-								</figure>
-								<figcaption>
-									<h3>Great travel at desert</h3>
-									<span>Sanchit Howdy</span>
-									<div class="item-price">$ 38.00</div>
-								</figcaption>
-							</div>
-						</div>
-
-						<div class="col-md-3">
-							<div class="product-item">
-								<figure class="product-style">
-									<img src="/booksaw/images/product-item3.jpg" alt="Books" class="product-item">
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-										Add to
-										Cart
-									</button>
-								</figure>
-								<figcaption>
-									<h3>The lady beauty Scarlett</h3>
-									<span>Arthur Doyle</span>
-									<div class="item-price">$ 45.00</div>
-								</figcaption>
-							</div>
-						</div>
-
-						<div class="col-md-3">
-							<div class="product-item">
-								<figure class="product-style">
-									<img src="/booksaw/images/product-item4.jpg" alt="Books" class="product-item">
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-										Add to
-										Cart
-									</button>
-								</figure>
-								<figcaption>
-									<h3>Once upon a time</h3>
-									<span>Klien Marry</span>
-									<div class="item-price">$ 35.00</div>
-								</figcaption>
-							</div>
-						</div>
-
-					</div><!--ft-books-slider-->
-				</div><!--grid-->
+                                    @*     <button type="button" class="add-to-cart" id="addCartId" data-product-tile="add-to-cart" onclick="AddCart()">
+                                            EKLEEEE</button> *@
+                                    </figure>
+                                    <figcaption>
+                                        <h3>@book.Title</h3>
+                                        @* @{
+                                    string authorInfo = book.AuthorDto.AuthorName + " " + book.AuthorDto.AuthorSurname;
+                                    bağlantı yapılırsa ad-soyad çeker
+                                    } *@
+                                        <span>@book.AuthorName</span>
+                                        <div class="item-price">@book.UnitPrice</div>
+                                    </figcaption>
+                                </div>
+                            </div>
+                        }
 
 
-			</div><!--inner-content-->
-		</div>
 
-		<div class="row">
-			<div class="col-md-12">
 
-				<div class="btn-wrap align-right">
-					<a href="#" class="btn-accent-arrow">
-						View all products <i class="icon icon-ns-arrow-right"></i>
-					</a>
-				</div>
+                    </div><!--ft-books-slider-->
+                </div><!--grid-->
 
-			</div>
-		</div>
-	</div>
+
+            </div><!--inner-content-->
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="btn-wrap align-right">
+                    <a href="#" class="btn-accent-arrow">
+                        View all products <i class="icon icon-ns-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </section>
+@section Scripts {
+    @* <script src="~/booksaw/js/cartprocess.js"></script> *@
 
+    <script>
+
+
+        function AddCart(bookId) {
+            // debugger;
+            $.ajax({
+                //js ile db işlemleri yapar
+                //sepet için cookie, session ya da db de sepet tablosu da yapılabilir
+                url: "/Cart/AddCart",//Controller altında method a gidecek
+                type: "POST",
+                data: { "bookId": bookId },//"bookId" (çift tırnak içinde bookId ile AddCart methodunda parametre olmalı)
+                success: function (data) {
+
+                    debugger;
+                    //<a href="~/Cart/CartIndex" class="cart for-buy">
+                    //    <i class="icon icon-clipboard"></i><p id="cartQuantityId">0</p> Adet<span>
+                    //        Cart:( <p id="cartPriceId">0</p>
+                    //        TL)
+                    //    </span>
+                    //</a>
+                    //
+
+                    var getQuantity = document.getElementById("cartQuantityId").innerText
+                    var getPrice = document.getElementById("cartPriceId").innerText;
+                    getPrice =parseFloat( getPrice )+ data.result;
+                    getQuantity = parseInt( getQuantity )+ 1;
+                    document.getElementById("cartQuantityId").innerText = getQuantity;
+                    document.getElementById("cartPriceId").innerText=getPrice;
+
+
+                },
+                error: function () {
+
+                }
+
+
+            });
+
+
+
+        }
+    </script>
+
+}
