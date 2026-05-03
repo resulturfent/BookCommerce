@@ -19,8 +19,10 @@ namespace Book_Commerce.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            //login aşaması yapılacak
             return View();
             //pull request için 
+
         }
         [HttpPost]
         public async Task<IActionResult> Register(UserViewModel userViewModel)
