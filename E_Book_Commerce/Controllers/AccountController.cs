@@ -20,6 +20,7 @@ namespace Book_Commerce.Controllers
         public IActionResult Register()
         {
             return View();
+            //pull request için 
         }
         [HttpPost]
         public async Task<IActionResult> Register(UserViewModel userViewModel)
